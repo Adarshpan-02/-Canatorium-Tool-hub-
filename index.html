@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canatorium - Ultimate Tool Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #263238; /* Charcoal Gray */
+            --light-bg: #F8F1E9; /* Warm Beige */
+            --dark-text: #FFFFFF; /* White */
+            --light-text: #212121; /* Dark Gray */
+            --accent: #AB47BC; /* Vibrant Purple */
+            --secondary: #76FF03; /* Lime Green */
+            --muted: #B0BEC5; /* Soft Gray */
+            --card-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body.dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        /* Bookmark Icon */
+        .bookmark {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 40px;
+            color: var(--accent);
+            z-index: 1001;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 15px 20px;
+            background: linear-gradient(90deg, var(--dark-bg), var(--accent));
+            color: var(--dark-text);
+            display: flex;
+            align-items:;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo .c-icon::before {
+            margin-left:30px;
+            content: "   ";
+            font-size: 30px;
+            font-weight: 700;
+            margin-right: 10px;
+            color: var(--secondary);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo span {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: var(--dark-text);
+            cursor: pointer;
+        }
+
+        nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--dark-text);
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+        }
+
+        section {
+            padding: 120px 20px 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--light-bg), var(--muted));
+            color: var(--light-text);
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            animation: fadeIn 2s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.3; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-content h2 {
+            font-size: 40px;
+            margin: 0 0 20px;
+            color: var(--accent);
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-content p {
+            max-width: 600px;
+            font-size: 18px;
+            color: var(--light-text);
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(171, 71, 188, 0.4);
+        }
+
+        .tool-section {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        .tool-section.dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .tool-section h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            color: var(--accent);
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-card h3 {
+            color: var(--secondary);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .tool-description {
+            font-size: 16px;
+            color: var(--muted);
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 50px;
+            box-sizing: border-box;
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .result-container {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: var(--card-bg);
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        footer a {
+            color: var(--dark-text);
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        #theme-toggle-footer {
+            padding: 8px 15px;
+            background-color: var(--accent);
+            color: var(--dark-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #theme-toggle-footer:hover {
+            background-color: var(--secondary);
+        }
+
+        .qr-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .contact-form button {
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .bookmark {
+                top: 15px;
+                left: 15px;
+                font-size: 32px;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            .logo .c-icon::before {
+                font-size: 26px;
+            }
+
+            .logo span {
+                font-size: 24px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero-content h2 {
+                font-size: 28px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .tool-section h2 {
+                font-size: 36px;
+            }
+
+            .tool-card {
+                padding: 15px;
+            }
+
+            .tool-card h3 {
+                font-size: 20px;
+            }
+
+            input, textarea {
+                padding: 10px;
+                min-height: 40px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
+            .btn, button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: var(--dark-bg);
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+
+            .contact-form {
+                padding: 15px;
+            }
+
+            .contact-form h3 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bookmark {
+                top: 10px;
+                left: 10px;
+                font-size: 28px;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .logo .c-icon::before {
+                font-size: 22px;
+            }
+
+            .logo span {
+                font-size: 20px;
+            }
+
+            .hero {
+                padding: 60px 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-content h2 {
+                font-size: 24px;
+            }
+
+            .hero-content p {
+                font-size: 14px;
+            }
+
+            .tool-section {
+                padding: 60px 10px;
+            }
+
+            .tool-section h2 {
+                font-size: 28px;
+            }
+
+            input, textarea {
+                padding: 8px;
+                min-height: 35px;
+            }
+
+            textarea {
+                min-height: 70px;
+            }
+
+            footer a {
+                display: block;
+                margin: 5px 0;
+            }
+
+            .contact-form {
+                padding: 10px;
+            }
+
+            .contact-form h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-toggle {
+                display: none;
+            }
+
+            .nav-menu {
+                display: flex;
+            }
+
+            .hero {
+                padding: 120px 20px;
+            }
+        }
+    </style>
+</head>
+<body class="light">
+    <div class="bookmark">C</div>
+
+    <header>
+        <div class="logo">
+            <span class="c-icon"></span><span>Canatorium</span>
+        </div>
+        
+    </header>
+
+    <section class="hero">
+      
+        <div class="hero-content">
+            <h2>Unleash Your Potential with Innovative Tools</h2>
+            <p>Explore a dynamic collection of utilities designed to inspire and empower. Dive into Canatorium and transform your digital experience!</p>
+            <div>
+                <button class="btn" onclick="showTool('search')">Search Engine</button>
+                <button class="btn" onclick="showTool('binary')">Binary Converter</button>
+                <button class="btn" onclick="showTool('calc')">Calculator</button>
+                <button class="btn" onclick="showTool('weather')">Weather</button>
+                <button class="btn" onclick="showTool('qrgen')">QR Generator</button>
+                <button class="btn" onclick="showTool('qrscan')">QR Scanner</button>
+                <button class="btn" onclick="showTool('currency')">Currency Converter</button>
+                <button class="btn" onclick="showTool('news')">News Feed</button>
+                
+            </div>
+            
+        </div>
+        
+    </section>
+    
+
+    <section class="tool-section" id="tools">
+        <h2>Our Tools</h2>
+        <div class="tool-grid">
+            <!-- Search Engine with Google Custom Search API -->
+            <div id="search-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>Search Engine</h3>
+                    <input id="search-input" placeholder="Enter search query...">
+                    <button onclick="searchWeb()">Search</button>
+                    <div class="result-container" id="search-results"></div>
+                    <div class="tool-description">
+                        Search the web using the Google Custom Search API. Enter your query to get relevant results (requires API key and CSE ID).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Binary Converter -->
+            <div id="binary-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>Binary Converter</h3>
+                    <textarea id="binary-input" placeholder="Enter text..."></textarea>
+                    <button onclick="convertToBinary()">Convert</button>
+                    <textarea id="binary-output" readonly></textarea>
+                    <div class="tool-description">
+                        Convert your text into 8-bit binary format. Perfect for coding enthusiasts and educational purposes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator -->
+            <div id="calc-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>Calculator</h3>
+                    <input id="calc-input" placeholder="e.g., 2 + 2">
+                    <button onclick="calculate()">Calculate</button>
+                    <div id="calc-result"></div>
+                    <div class="tool-description">
+                        Perform quick mathematical calculations with this simple calculator. Supports basic arithmetic operations.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather App -->
+            <div id="weather-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>Weather</h3>
+                    <input id="weather-input" placeholder="Enter city name...">
+                    <button onclick="getWeather()">Get Weather</button>
+                    <div class="result-container" id="weather-result"></div>
+                    <div class="tool-description">
+                        Check the current weather for any city using the OpenWeatherMap API.
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Generator -->
+            <div id="qrgen-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>QR Generator</h3>
+                    <input id="qr-input" placeholder="Enter text or URL...">
+                    <button id="generate-qr-btn" onclick="generateQR()">Generate QR</button>
+                    <img id="qr-image" alt="Generated QR Code" style="max-width: 100%; margin-top: 10px; display: none;">
+                    <div class="qr-actions" style="display: none;" id="qr-actions">
+                        <button onclick="downloadQR()">Download</button>
+                        <button onclick="shareQR()">Share</button>
+                    </div>
+                    <div class="tool-description">
+                        Create QR codes from text or URLs using the QuickChart API. Includes share and download options.
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR Scanner -->
+            <div id="qrscan-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>QR Scanner</h3>
+                    <input type="file" id="qr-file" accept="image/*">
+                    <button onclick="scanQR()">Scan</button>
+                    <div class="result-container" id="qr-result"></div>
+                    <div class="tool-description">
+                        Scan QR codes from uploaded images. A handy tool for decoding QR content (camera support requires setup).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Currency Converter -->
+            <div id="currency-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>Currency Converter</h3>
+                    <input id="currency-from" placeholder="From (e.g., USD)">
+                    <input id="currency-to" placeholder="To (e.g., EUR)">
+                    <input id="amount" type="number" placeholder="Amount" min="0">
+                    <button onclick="convertCurrency()">Convert</button>
+                    <div id="currency-result"></div>
+                    <div class="tool-description">
+                        Convert currencies in real-time using the ExchangeRate-API. Enter the source currency, target currency, and amount.
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Feed -->
+            <div id="news-tool" class="tool-content">
+                <div class="tool-card">
+                    <h3>News Feed</h3>
+                    <input id="news-category" placeholder="Category (e.g., technology)">
+                    <button onclick="getNews()">Get News</button>
+                    <div class="result-container" id="news-result"></div>
+                    <div class="tool-description">
+                        Stay updated with the latest news using the NewsAPI. Enter a category to fetch relevant headlines.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ 
+
+    <div class="contact-form">
+        <h3>Contact Us</h3>
+        <input type="text" id="contact-name" placeholder="Your Name" required>
+        <input type="email" id="contact-email" placeholder="Your Email" required>
+        <textarea id="contact-message" placeholder="Your Message" required></textarea>
+        <button onclick="submitContact()">Submit</button>
+    </div>
+  
+     <footer>
+        <div>
+            <a href="#support">Support</a>
+            <a href="#info">Info</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button id="theme-toggle-footer" onclick="toggleTheme()">Toggle Theme</button>
+        <p>© 2025 Canatorium. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+    <script>
+        // Theme Toggle
+        const body = document.body;
+        function toggleTheme() {
+            body.classList.toggle('dark');
+            body.classList.toggle('light');
+            document.querySelectorAll('.tool-section').forEach(section => {
+                section.classList.toggle('dark');
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Tool Navigation
+        function showTool(toolId) {
+            document.querySelectorAll('.tool-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${toolId}-tool`).classList.add('active');
+            window.scrollTo({ top: document.getElementById('tools').offsetTop - 70, behavior: 'smooth' });
+        }
+
+        // Search Engine with Google Custom Search API
+        const GOOGLE_API_KEY = 'https://cse.google.com/cse?cx=b332195431eb74870'; // Replace with your Google Cloud API Key
+        const CSE_ID = 'b332195431eb74870'; // Replace with your Custom Search Engine ID
+        async function searchWeb() {
+            const query = document.getElementById('search-input').value;
+            if (!query) {
+                document.getElementById('search-results').innerHTML = 'Please enter a search query.';
+                return;
+            }
+            try {
+                const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${CSE_ID}&q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                if (data.items) {
+                    const results = data.items.slice(0, 3).map(item => `<p><a href="${item.link}" target="_blank">${item.title}</a></p>`).join('');
+                    document.getElementById('search-results').innerHTML = results || 'No results found.';
+                } else {
+                    document.getElementById('search-results').innerHTML = 'Error fetching search results.';
+                }
+            } catch (error) {
+                document.getElementById('search-results').innerHTML = 'Error: Check API key and CSE ID.';
+            }
+        }
+
+        // Binary Converter
+        function convertToBinary() {
+            const input = document.getElementById('binary-input').value;
+            let output = '';
+            for (let i = 0; i < input.length; i++) {
+                output += input.charCodeAt(i).toString(2).padStart(8, '0') + ' ';
+            }
+            document.getElementById('binary-output').value = output.trim();
+        }
+
+        // Calculator
+        function calculate() {
+            const input = document.getElementById('calc-input').value;
+            try {
+                const result = eval(input);
+                document.getElementById('calc-result').innerHTML = `Result: ${result}`;
+            } catch (e) {
+                document.getElementById('calc-result').innerHTML = 'Invalid calculation';
+            }
+        }
+
+        // Weather API (OpenWeatherMap)
+        const WEATHER_API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your OpenWeatherMap API key
+        async function getWeather() {
+            const city = document.getElementById('weather-input').value;
+            if (!city) {
+                document.getElementById('weather-result').innerHTML = 'Please enter a city name.';
+                return;
+            }
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric`);
+                const data = await response.json();
+                if (data.cod === 200) {
+                    const weather = data.weather[0].description;
+                    const temp = data.main.temp;
+                    document.getElementById('weather-result').innerHTML = `Weather in ${city}: ${weather}, Temperature: ${temp}°C`;
+                } else {
+                    document.getElementById('weather-result').innerHTML = `Error: ${data.message} (Status: ${data.cod}). Visit https://openweathermap.org/faq#error401 for more info.`;
+                }
+            } catch (error) {
+                document.getElementById('weather-result').innerHTML = 'Error fetching weather data. Check your API key or internet connection.';
+            }
+        }
+
+        // QR Generator API with Share and Download
+        let qrImageUrl = '';
+        function generateQR() {
+            const text = document.getElementById('qr-input').value;
+            if (!text) {
+                document.getElementById('qr-image').src = '';
+                document.getElementById('qr-actions').style.display = 'none';
+                alert('Please enter text or a URL.');
+                return;
+            }
+            qrImageUrl = `https://quickchart.io/qr?text=${encodeURIComponent(text)}&size=200`;
+            document.getElementById('qr-image').src = qrImageUrl;
+            document.getElementById('qr-image').style.display = 'block';
+            document.getElementById('qr-actions').style.display = 'flex';
+        }
+
+        function downloadQR() {
+            const link = document.createElement('a');
+            link.href = qrImageUrl;
+            link.download = 'qr-code.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function shareQR() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Generated QR Code',
+                    text: 'Check out this QR Code!',
+                    url: qrImageUrl
+                }).catch(error => alert('Sharing not supported or failed: ' + error));
+            } else {
+                alert('Web Share API not supported in this browser. Copy the URL: ' + qrImageUrl);
+            }
+        }
+
+        // QR Scanner
+        function scanQR() {
+            const fileInput = document.getElementById('qr-file');
+            if (fileInput.files.length > 0) {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+                    document.getElementById('qr-result').innerHTML = code ? code.data : 'No QR code found';
+                };
+                img.src = URL.createObjectURL(fileInput.files[0]);
+            }
+        }
+
+        // Currency Converter API (ExchangeRate-API)
+        const EXCHANGE_API_KEY = 'YOUR_EXCHANGERATE_API_KEY';
+        async function convertCurrency() {
+            const from = document.getElementById('currency-from').value.toUpperCase();
+            const to = document.getElementById('currency-to').value.toUpperCase();
+            const amount = document.getElementById('amount').value || 1;
+            if (!from || !to || !amount) {
+                document.getElementById('currency-result').innerHTML = 'Please fill all fields.';
+                return;
+            }
+            try {
+                const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}?apiKey=${EXCHANGE_API_KEY}`);
+                const data = await response.json();
+                if (data.rates && data.rates[to]) {
+                    const rate = data.rates[to];
+                    const result = amount * rate;
+                    document.getElementById('currency-result').innerHTML = `${amount} ${from} = ${result.toFixed(2)} ${to}`;
+                } else {
+                    document.getElementById('currency-result').innerHTML = 'Invalid currency codes or API error.';
+                }
+            } catch (error) {
+                document.getElementById('currency-result').innerHTML = 'Error fetching exchange rates.';
+            }
+        }
+
+        // News Feed API (NewsAPI)
+        const NEWS_API_KEY = 'YOUR_NEWSAPI_API_KEY';
+        async function getNews() {
+            const category = document.getElementById('news-category').value || 'general';
+            try {
+                const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${NEWS_API_KEY}`);
+                const data = await response.json();
+                if (data.status === 'ok' && data.articles.length > 0) {
+                    const articles = data.articles.slice(0, 3).map(article => `<p><a href="${article.url}" target="_blank">${article.title}</a></p>`).join('');
+                    document.getElementById('news-result').innerHTML = articles;
+                } else {
+                    document.getElementById('news-result').innerHTML = 'No news found or API error.';
+                }
+            } catch (error) {
+                document.getElementById('news-result').innerHTML = 'Error fetching news.';
+            }
+        }
+
+        // Contact Form Submission
+        function submitContact() {
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const message = document.getElementById('contact-message').value;
+            if (name && email && message) {
+                console.log('Contact Form Submitted:', { name, email, message });
+                alert('Thank you! Your message has been received (check console for details).');
+                document.getElementById('contact-name').value = '';
+                document.getElementById('contact-email').value = '';
+                document.getElementById('contact-message').value = '';
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+    </script>
+</body>
+</html>
